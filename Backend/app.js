@@ -19,8 +19,6 @@ AWS.config.update({
 
 const app = express();
 
-
-
 app.use(bodyParser.json());
 
 app.options('/Supplier/AddSupplier', cors());
