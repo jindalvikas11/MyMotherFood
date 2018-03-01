@@ -1,0 +1,36 @@
+<form (ngSubmit)="onSubmit()" #signupForm="ngForm" style="margin-top:15px">
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-4">
+      <!-- <label for="contact-email">Email address
+        <sup>*</sup>
+      </label>-->
+      <input placeholder="Email address" type="email" class="form-control" id="user-email" required="true" [(ngModel)]="user.email"
+        name="email" #email="ngModel">
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+
+    <div class="col-md-4">
+      <!--<label for="user-password">Password
+        <sup>*</sup>
+      </label>-->
+      <input placeholder="Password" type="password" class="form-control" id="user-password" [(ngModel)]="user.password" required="true"
+        name="password" #name="ngModel">
+    </div>
+  </div>
+
+  <div *ngIf="message" class="row justify-content-md-center">
+    <div class="col-md-4">
+      <p>{{ message }}</p>
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-4">
+      <button type="submit" class="btn btn-success" [disabled]="!signupForm.form.valid">Submit</button>
+    </div>
+  </div>
+
+</form>

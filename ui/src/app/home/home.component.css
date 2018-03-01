@@ -1,0 +1,16 @@
+
+
+@keyframes rotatephoto {
+    0%   {transform: rotate(0deg);}
+    25%  {transform: rotate(90deg);}
+    50%  {transform: rotate(180deg);}
+    100% {transform: rotate(270deg);}
+}
+
+
+img{
+    animation-name: rotatephoto;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+

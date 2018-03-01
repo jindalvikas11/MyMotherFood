@@ -21,11 +21,13 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.options('/Supplier/AddSupplier', cors());
+app.options('*', cors());
 
-app.get('/Supplier/AddSupplier', cors(), supplier.addSupplier);
+app.post('/Supplier/AddSupplier', cors(), supplier.addSupplier);
 
-app.get('/Login/CreateLogin', cors(), login.createLogin);
+app.post('/Supplier/AddAllInfo', cors(), supplier.addSupplierAllInfo);
+
+app.post('/Login/verifyLogin', cors(), login.verifyLogin);
 
 var port = process.env.PORT || 8080;
 

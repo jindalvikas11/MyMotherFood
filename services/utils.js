@@ -17,28 +17,21 @@ const saveItem = function (table, item) {
             } else {
                 resolve(results, fields);
             }
+            //connection.destroy();
         });
     });
 };
 
-const getItems = function (table, id) {
+const getItems = function (table, columnName, columnVal) {
     return new Promise((resolve, reject) => {
-        var docClient = new AWS.DynamoDB.DocumentClient()
-
-        var params = {
-            TableName: table,
-            Key: {
-                "id": id
-            }
-        };
-
-        docClient.get(params, (err, data) => {
-            if (err) {
-                reject(err);
+        const querStmt = "SELECT * FROM " + table + " WHERE " + columnName + "='" + columnVal + "'";
+        connection.query(querStmt, (error, results, fields) => {
+            if (error) {
+                reject(error);
             } else {
-                const item = data.Item ? JSON.parse(data.Item.itemsJSON) : {};
-                resolve(item);
+                resolve(results, fields);
             }
+            //connection.destroy();
         });
     });
 };

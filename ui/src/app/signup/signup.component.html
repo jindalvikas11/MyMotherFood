@@ -1,0 +1,132 @@
+
+
+<form (ngSubmit)="onSubmit()" #signupForm="ngForm" style="margin-top:15px">
+    <div class="row justify-content-lg-center">
+
+    <div class="col-lg-4">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary" [class.active]="'C' === user.type">
+          <input type="radio" name="consumer" [(ngModel)]="user.type" value="C">&nbsp;&nbsp;I want to order food</label>
+        <label class="btn btn-primary" [class.active]="'S' === user.type">
+          <input type="radio" name="supplier" [(ngModel)]="user.type" value="S">&nbsp;&nbsp;I want to supply food</label>
+      </div>
+    </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+    <div class="form-group col-md-4">
+      <input type="text" class="form-control" id="user-firstName" [(ngModel)]="user.firstName" required="true" name="firstName"
+        #name="ngModel" placeholder="First Name">
+    </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+    <div class="form-group col-md-4">
+      <!--<label for="user-lastName">Last Name
+        <sup>*</sup>
+      </label>-->
+      <input placeholder="Last Name" type="text" class="form-control" id="user-lastName" [(ngModel)]="user.lastName" required="true"
+        name="lastName" #name="ngModel">
+    </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+
+    <div class="form-group col-md-4">
+      <!--<label for="contact-email">Email address
+        <sup>*</sup>
+      </label>-->
+      <input placeholder="Email address" type="email" class="form-control" id="user-email" required="true" [(ngModel)]="user.email"
+        name="email" #email="ngModel">
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+
+    <div class="form-group col-md-4">
+      <!--<label for="user-password">Password
+        <sup>*</sup>
+      </label>-->
+      <input placeholder="Password" type="password" class="form-control" id="user-password" [(ngModel)]="user.password" required="true"
+        name="password" #name="ngModel">
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+
+    <div class="form-group col-md-4">
+      <!--<label for="contact-phone">Phone Number
+        <sup>*</sup>
+      </label>-->
+      <input placeholder="Phone Number" type="number" class="form-control" id="user-phone" required="true" [(ngModel)]="user.phone"
+        name="phone" #phone="ngModel">
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+
+    <div class="form-group col-md-4" *ngIf="user.type === 'S'">
+      <!--<label for="user-adrline1">Address Line 1
+        <sup>*</sup>
+      </label>-->
+      <input placeholder="Address Line 1" type="text" class="form-control" id="user-adrline1" [(ngModel)]="user.adrline1" required="true"
+        name="adrline1" #name="ngModel">
+    </div>
+  </div>
+
+    
+  <div class="row justify-content-md-center">
+    <div class="form-group col-md-4" *ngIf="user.type === 'S'">
+      <!--<label for="user-adrline2">Address Line 2
+      </label>-->
+      <input placeholder="Address Line 2" type="text" class="form-control" id="user-adrline2" [(ngModel)]="user.adrline2" name="adrline2"
+        #name="ngModel">
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+
+    <div class="form-group col-md-4" *ngIf="user.type === 'S'">
+      <!--<label for="user-city">City
+        <sup>*</sup>
+      </label>-->
+      <input placeholder="City" type="text" class="form-control" id="user-city" [(ngModel)]="user.city" required="true" name="city"
+        #name="ngModel">
+    </div>
+  </div>
+
+    
+  <div class="row justify-content-md-center">
+    <div class="form-group col-md-4" *ngIf="user.type === 'S'">
+      <!--<label for="user-state">State
+        <sup>*</sup>
+      </label>-->
+      <input placeholder="State" type="text" class="form-control" id="user-state" [(ngModel)]="user.state" required="true" name="state"
+        #name="ngModel">
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+
+    <div class="form-group col-md-4" *ngIf="user.type === 'S'">
+      <!--<label for="user-country">Country
+        <sup>*</sup>
+      </label>-->
+      <input placeholder="Country" type="text" class="form-control" id="user-country" [(ngModel)]="user.country" required="true"
+        name="country" #name="ngModel">
+    </div>
+  </div>
+
+  <div *ngIf="message" class="row justify-content-md-center">
+    <div class="col-md-4">
+      <p>{{ message }}</p>
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+
+    <div class="col-md-4">
+      <button type="submit" class="btn btn-success" [disabled]="!signupForm.form.valid">Submit</button>
+    </div>
+  </div>
+</form>

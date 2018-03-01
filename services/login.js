@@ -32,4 +32,39 @@ const createLogin = function(req, res){
     });
 };
 
-module.exports = { createLogin };
+const verifyLogin = function(req, res){
+    const body = req.body;
+    const getPromise = utils.getItems.call(this, 'MyMotherFood.LoginInfo', 'userid', body.email);
+
+    getPromise.then((results,fields) => {
+        if(results.length){
+            const result = results[0];
+            if(result.password === body.password){
+                res.json({
+                    code: '00',
+                    message: 'success',
+                    id: result.id,
+                    type: result.user_type
+                });
+            }else{
+                res.json({
+                    code: '01',
+                    message: 'Invalid Credentials. Please try again.',
+                });
+            }
+        }else{
+            res.json({
+                code: '01',
+                message: 'Invalid Credentials. Please try again.',
+            });
+        }  
+    }).catch((err) => {
+        res.json({
+            code: '02',
+            message: 'fail',
+            error: err.stack
+        });
+    });
+};
+
+module.exports = { createLogin, verifyLogin };
