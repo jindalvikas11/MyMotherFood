@@ -40,12 +40,14 @@ const verifyLogin = function(req, res){
         if(results.length){
             const result = results[0];
             if(result.password === body.password){
+                req.mmfSession.userInfo = JSON.stringify(result);
                 res.json({
                     code: '00',
                     message: 'success',
                     id: result.id,
                     type: result.user_type
                 });
+                res.end();
             }else{
                 res.json({
                     code: '01',
@@ -67,4 +69,9 @@ const verifyLogin = function(req, res){
     });
 };
 
-module.exports = { createLogin, verifyLogin };
+const signOut = function(req, res){
+    req.mmfSession.reset();
+    res.redirect('/public/#/signin');
+};
+
+module.exports = { createLogin, verifyLogin, signOut };

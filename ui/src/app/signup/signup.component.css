@@ -1,7 +1,52 @@
-.btn-success, .btn-group{
+.btn-primary{
     width: 100%;
 }
 
 .btn{
     padding: 0.5rem 17px;
+}
+
+input{
+    border: 2px solid #0275d8;
+    height:44px;
+    transition: 0.2s ease all;
+}
+
+input:focus ~ .floating-label{
+  top: 8px;
+  color: #0275d8;
+  left: 27px;
+  font-size: 11px;
+  opacity: 1;
+}
+
+input:focus{
+    height:66px;
+}
+
+input:not(:focus):valid ~ .floating-label{
+    display: none;
+}
+
+
+
+.floating-label {
+  position: absolute;
+  pointer-events: none;
+  left: 27px;
+  top: 11px;
+  transition: 0.2s ease all;
+  color: #ccc;
+}
+
+.btn-outline-primary{
+    text-align: center;
+    padding-left:0px;
+    padding-right: 0px;
+    color: white;
+}
+
+form{
+    position: relative;
+    margin-top:200px;
 }

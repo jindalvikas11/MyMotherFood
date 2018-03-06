@@ -10,7 +10,15 @@ import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 import { RestService } from './providers/rest.service';
+import { InfoService } from './providers/info.service';
+
 import { HomeComponent } from './home/home.component';
+import { ConsumerHomeComponent } from './consumer-home/consumer-home.component';
+import { SupplierHomeComponent } from './supplier-home/supplier-home.component';
+import { CapitalizePipe } from './pipe/capitalize.pipe';
+
+import {InputTextModule} from 'primeng/inputtext';
+import {ProgressBarModule} from 'primeng/progressbar';
 
 
 
@@ -27,6 +35,14 @@ const appRoutes: Routes = [
     path: 'home',
     component: HomeComponent
   },
+  {
+    path: 'consumer/home',
+    component: ConsumerHomeComponent
+  },
+  {
+    path: 'supplier/home',
+    component: SupplierHomeComponent
+  },
   { 
     path: '',
     redirectTo: '/home',
@@ -39,7 +55,10 @@ const appRoutes: Routes = [
     AppComponent,
     SignupComponent,
     SigninComponent,
-    HomeComponent
+    HomeComponent,
+    ConsumerHomeComponent,
+    SupplierHomeComponent,
+    CapitalizePipe
   ],
   imports: [
     BrowserModule,
@@ -51,10 +70,13 @@ const appRoutes: Routes = [
     ),
     NgbModule.forRoot(),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    InputTextModule,
+    ProgressBarModule
   ],
   providers: [
-    RestService
+    RestService,
+    InfoService
   ],
   bootstrap: [AppComponent]
 })

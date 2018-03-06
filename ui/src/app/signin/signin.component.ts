@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../providers/rest.service';
+import { InfoService } from '../providers/info.service';
+
 import { User } from '../models/user';
 
 @Component({
@@ -10,7 +12,8 @@ import { User } from '../models/user';
 export class SigninComponent implements OnInit {
 
   constructor(
-    private rest: RestService
+    private rest: RestService,
+    private info: InfoService
   ) { }
   user = new User;
   message: string;
@@ -20,7 +23,12 @@ export class SigninComponent implements OnInit {
   onSubmit() {
     this.rest.signin(this.user).subscribe((data) => {
       if(data.code === '00'){
-        alert('Login Successful');
+        if(data.type === 'S'){
+          window.location.href = '/public/#/supplier/home'          
+        }else{
+          window.location.href = '/public/#/consumer/home'          
+        }
+        this.info.loggedIn = true;
       }else{
         alert('Invalid Credentials')
       }

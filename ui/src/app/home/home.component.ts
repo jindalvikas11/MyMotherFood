@@ -21,7 +21,25 @@ export class HomeComponent implements OnInit {
     '9.jpg'
   ];
 
+  timer:any;
+
   ngOnInit() {
+      
+      
+      this.timer = setInterval(() => {
+        const i = Math.floor(Math.random() * 9)
+
+        let ele = document.querySelector('.imganimate');
+        if(ele) ele.classList.toggle('imganimate');
+
+        ele = document.querySelector('.index' + i);
+        ele.classList.toggle('imganimate');
+        
+      }, 4000);
+  }
+
+  ngOnDestroy(){
+    clearInterval(this.timer);
   }
 
 }

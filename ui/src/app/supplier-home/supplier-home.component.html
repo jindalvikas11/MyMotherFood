@@ -1,0 +1,96 @@
+<h2 style="color:white">
+  Welcome {{ user.firstName + ' ' + user.lastName + '!' }}
+</h2>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Add/Edit Food Item</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form (ngSubmit)="onSubmit(c)" #addFoodForm="ngForm">
+    <div class="modal-body row">
+      <div class="form-group col-md-12">
+        <input type="text" class="form-control" id="food-name" [(ngModel)]="food.name" required="true" name="name" #name="ngModel">
+        <span class="floating-label">Name</span>
+      </div>
+      <div class="form-group col-md-12">
+        <input type="number" class="form-control" id="food-quantity" [(ngModel)]="food.quantity" required="true" name="quantity"
+          #quantity="ngModel">
+        <span class="floating-label">Quantity</span>
+      </div>
+      <div class="form-group col-md-12">
+        <input type="number" class="form-control" id="food-price" [(ngModel)]="food.price" required="true" name="price" #price="ngModel">
+        <span class="floating-label">Price</span>
+      </div>
+      <div class="form-group col-md-12">
+        <input type="text" class="form-control" id="food-description" [(ngModel)]="food.description" required="true" name="description"
+          #description="ngModel">
+        <span class="floating-label">Description</span>
+      </div>
+
+      <div class="form-group col-md-12 select-img">
+        <input type="file" id="file" class="custom-file-input" (change)="onChange($event)">
+        <span class="custom-file-control"></span>
+      </div>
+
+      <p-progressBar mode="indeterminate" *ngIf="uploadStatus === ImgUploadStatus.progress"></p-progressBar>
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="!addFoodForm.form.valid || uploadStatus !== ImgUploadStatus.completed">Save</button>
+    </div>
+  </form>
+</ng-template>
+
+<!--<table class="table table-inverse table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Quantity Remaining</th>
+        <th scope="col">Price</th>
+        <th scope="col">Description</th>
+        <th scope="col" colspan="2">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let food of foodList">
+          <th scope="row">{{food.name | capitalize}}</th>
+          <td>{{food.quantity | number}}</td>
+          <td>{{food.price | currency}}</td>
+          <td>{{food.description | capitalize}}</td>
+          <td><button class="btn btn-outline-primary" (click)="editFood(food, content)">Edit</button></td>
+          <td><button class="btn btn-danger" (click)="deleteFood(food)">Delete</button></td>          
+        </tr>
+    </tbody>
+</table>-->
+
+<div class="row food-items">
+  <div class="col-sm-3 col-md-3" *ngFor="let food of foodList">
+    <hr/>
+    <div class="thumbnail">
+      <div class="food-item-container">
+        <img src="{{food.img ? ('https://s3.amazonaws.com/mymotherfood/' + food.img) : '../assets/logow.png'}}" alt="Image Not Found" [class.opaque]="!food.img" width="512" height="512" class="img-thumbnail">
+        <button class="btn btn-primary float-left" (click)="editFood(food, content)">Edit</button>
+        <button class="btn btn-danger float-right" (click)="deleteFood(food)">Delete</button>
+      </div>
+      <div class="caption">
+
+        <div class="float-left font-weight-bold">{{food.name | capitalize}}</div>
+        <div class="float-right font-weight-bold">{{food.price | currency}}</div>
+        <br/>
+        <div class="float-left" style="font-family:cursive; color:#13d813">Qty: {{food.quantity | number}}</div>
+        <br/>
+        <div style="font-family:cursive; color:#c1bdbd">{{food.description | capitalize}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3 col-md-3">
+    <div class="thumbnail food-add-item" (click)="open(content)">+</div>
+  </div>
+</div>
+
+<!--<button class="btn btn-md btn-primary" (click)="open(content)">Add New Food Item</button>-->

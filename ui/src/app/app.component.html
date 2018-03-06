@@ -1,18 +1,31 @@
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
-  <div class="navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="home" routerLinkActive="active">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="signup" routerLinkActive="active">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="signin" routerLinkActive="active">Sign In</a>
-      </li>
-    </ul>
+<div class="overlay"></div>
+
+<div class="float-right row" style="margin-right:15px">
+  <div class="home-toggle" [class.col-md-9]="info.loggedIn === true" [class.col-md-12]="!info.loggedIn">
+    <a class="btn-outline-primary btn" routerLink="home" routerLinkActive="active" *ngIf="!info.loggedIn">Home</a>
+    <a class="btn-outline-primary btn" routerLink="signup" routerLinkActive="active" *ngIf="!info.loggedIn">Sign Up</a>
+    <a class="btn-outline-primary btn" routerLink="signin" routerLinkActive="active" *ngIf="!info.loggedIn">Sign In</a>
+    <a class="btn-outline-primary btn" routerLink="signin" routerLinkActive="active" (click)="signout()" *ngIf="info.loggedIn">Sign Out</a>
   </div>
-</nav>
+  <div class="menuicon col-md-3" (click)="openNav()" *ngIf="info.loggedIn">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+  <a class="nav-link" routerLink="home" routerLinkActive="active" (click)="closeNav()">Food Items</a>
+  <a class="nav-link" routerLink="about" routerLinkActive="active" (click)="closeNav()">Orders</a>
+  <a class="nav-link" routerLink="contact" routerLinkActive="active" (click)="closeNav()">Credits</a>
+</div>
+
+<img style="margin:auto" src="../assets/logo.png" class="float-left">
+<div class="logoText align-middle">My Mother's Food</div>
+
+
 <div id="main">
   <router-outlet></router-outlet>
 </div>

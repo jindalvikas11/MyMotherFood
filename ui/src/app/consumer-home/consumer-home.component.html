@@ -1,0 +1,18 @@
+<h4>
+  Welcome {{ user.firstName + ' ' + user.lastName + '!' }}
+</h4>
+
+<table class="table table-inverse table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Supplier Name</th>
+        <th scope="col">Distance</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let supplier of supplierList">
+          <th scope="row">{{(supplier.firstName + ' ' + supplier.lastName) | capitalize}}</th>
+          <td>supplier.distance</td>         
+        </tr>
+    </tbody>
+</table>

@@ -3,10 +3,35 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 body {
-    background: url('./assets/bg.jpg') no-repeat center center fixed;
+    background-color: rgba(0,0,0,0.5);
+}
+
+body:after{
+    content:"";
+    position:fixed; /* stretch a fixed position to the whole screen */
+    top:0;
+    height:100vh; /* fix for mobile browser address bar appearing disappearing */
+    left:0;
+    right:0;
+    z-index:-2; /* needed to keep in the background */
+    background: url('./assets/bg.jpg') center center;
+    opacity: 1.0;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    color: #787878;
+}
+
+.logo{
+    margin-top: 15px;
+    margin-left:15px;
+    
+}
+
+.logoText{
+    color: #0275d8;
+    font-weight: 900;
+    font-family: cursive;
+    font-size: 50px;
+    text-shadow: 2px 2px #26e05f;
 }

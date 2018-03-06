@@ -1,0 +1,97 @@
+input{
+    border: 2px solid #0275d8;
+    height:44px;
+    transition: 0.2s ease all;
+}
+
+input:focus ~ .floating-label{
+  top: 8px;
+  color: #0275d8;
+  left: 27px;
+  font-size: 11px;
+  opacity: 1;
+}
+
+input:focus{
+    height:66px;
+}
+
+input:not(:focus):valid ~ .floating-label{
+    display: none;
+}
+
+
+
+.floating-label {
+  position: absolute;
+  pointer-events: none;
+  left: 27px;
+  top: 11px;
+  transition: 0.2s ease all;
+  color: #ccc;
+}
+
+.dark-modal .modal-content {
+    background-color: #292b2c;
+    color: white;
+}
+
+.dark-modal .close {
+    color: white;   
+}
+
+table th, table td{
+    text-align: center;
+}
+
+.food-items{
+    color: white;
+}
+
+.food-item-container button{
+    opacity: 0;
+    position: absolute;
+    top: 235px;
+}
+
+.food-item-container button:nth-child(2){
+    left: 25px;
+}
+
+.food-item-container button:nth-child(3){
+    right: 25px;
+}
+
+.food-item-container:hover button{
+    opacity: 1;
+}
+
+.food-add-item{
+    border: 1px dotted #ccc;
+    padding: 34%;
+    text-align: center;
+    margin-top: 14%;
+    font-size: 50px;
+}
+
+p-progressbar{
+    width: 92%;
+    margin-top: -20px;
+    margin-left: 4%;
+}
+
+.select-img{
+    margin-left: 4%;
+}
+
+.select-img span{
+    width: 92%;
+}
+
+.food-items img{
+    height: 253px;
+}
+
+.food-items .opaque{
+    opacity: 0.5;
+}
