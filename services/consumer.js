@@ -90,4 +90,100 @@ const getDetails = function (req, res) {
 
 };
 
-module.exports = { addConsumer, getDetails };
+const getCartItems = function (req, res) {
+    let consumerId;
+    if (!req.mmfSession.userInfo) {
+        res.redirect('/public/#/signin');
+        return;
+    } else {
+        if(!req.query.isSupplier){
+            consumerId = (JSON.parse(req.mmfSession.userInfo)).id;
+        }else{
+            consumerId = req.query.consumerId;
+        }
+    }
+
+    const getPromise = utils.getItems.call(this, 'MyMotherFood.CartInfo', 'consumerId', consumerId);
+
+    getPromise.then((results, fields) => {
+        res.json(results);
+    }).catch(err => {
+        res.json({
+            code: '02',
+            message: 'Get Food Items failed',
+            error: err.stack
+        });
+    });
+};
+
+const getAllInfo = function(req, res){
+    let type,id;
+    if(req.mmfSession.userInfo){
+        const userInfo = JSON.parse(req.mmfSession.userInfo);
+        type = userInfo.user_type;
+        id = userInfo.id;
+    }else{
+        res.redirect('/public/#/signin');
+        return;
+    }
+
+    let infoMethod;
+
+    if(type === 'C'){
+        infoMethod = `GetConsumerInfo`;
+    }else{
+
+    }
+
+    const executePromise = utils.executeProcedure.call(this, infoMethod, id);
+
+    executePromise.then((results, fields) => {
+        console.log(JSON.stringify(results[0]));
+        results = processResponse(results[0]);
+        res.json(results);
+    }).catch(err => {
+        res.json({
+            code: '02',
+            message: 'Get Food Items failed',
+            error: err.stack
+        });
+    });
+}
+
+const processResponse = function(results){
+    let response = {
+        userInfo : {
+            firstName: results[0].first_name,
+            lastName: results[0].last_name,
+            phone: results[0].phone,
+            email: results[0].email
+        }
+    };
+
+    let cartItems = new Array;
+    response.cart = cartItems;
+
+    for(let i = 0; i < results.length; i++){
+        if(!results[i].id) continue;
+        cartItems.push({
+            id: results[i].id,
+            supplier:{
+                id: results[i].supplierId,
+                firstName: results[i].SuppFirstName,
+                lastName: results[i].SuppLastName,
+                phone: results[i].SuppPhone,                
+                email: results[i].SuppEmail
+            },
+            food:{
+                id: results[i].foodId,
+                name: results[i].name,
+                img: results[i].img,
+                quantity: results[i].quantity,
+                price: results[i].price
+            }
+        });
+    }
+    return response;
+}
+
+module.exports = { addConsumer, getDetails, getCartItems, getAllInfo };

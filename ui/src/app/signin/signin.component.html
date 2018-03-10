@@ -1,38 +1,28 @@
-<form (ngSubmit)="onSubmit()" #signupForm="ngForm" style="margin-top:120px">
+<form (ngSubmit)="onSubmit()" #signupForm="ngForm" class="row">
 
-  <div class="row justify-content-md-center">
-    <div class="col-md-4">
-      <!-- <label for="contact-email">Email address
-        <sup>*</sup>
-      </label>-->
-      <input type="email" class="form-control inputText" id="user-email" required="true" [(ngModel)]="user.email"
-        name="email" #email="ngModel">
-      <span class="floating-label">Your email address</span>        
-    </div>
+
+  <div class="form-group col-md-4 offset-md-4">
+    <input type="email" class="form-control inputText" id="user-email" required="true" [(ngModel)]="user.email" name="email"
+      #email="ngModel">
+    <span class="floating-label">Your email address</span>
   </div>
 
-  <div class="row justify-content-md-center">
 
-    <div class="col-md-4">
-      <!--<label for="user-password">Password
-        <sup>*</sup>
-      </label>-->
-      <input type="password" class="form-control" id="user-password" [(ngModel)]="user.password" required="true"
-        name="password" #name="ngModel">
-      <span class="floating-label">Password</span>                
-    </div>
+
+
+  <div class="form-group col-md-4 offset-md-4">
+    <input type="password" class="form-control" id="user-password" [(ngModel)]="user.password" required="true" name="password"
+      #name="ngModel">
+    <span class="floating-label">Password</span>
   </div>
 
-  <div *ngIf="message" class="row justify-content-md-center">
-    <div class="col-md-4">
-      <p>{{ message }}</p>
-    </div>
+
+
+
+
+  <div class="form-group col-md-4 offset-md-4">
+    <button type="submit" class="btn btn-primary" [disabled]="!signupForm.form.valid">Submit</button>
   </div>
 
-  <div class="row justify-content-md-center">
-    <div class="col-md-4">
-      <button type="submit" class="btn btn-primary" [disabled]="!signupForm.form.valid">Submit</button>
-    </div>
-  </div>
 
 </form>

@@ -21,11 +21,17 @@ const food = require('./food.js');
 
 const sessions = require('client-sessions');
 
+var https = require('https');
+
 //const SessionStore = require('express-sql-session')(session);
 
 const login = require('./login.js');
 
 var path = require('path');
+
+var fs = require('fs');
+
+var payment = require('./payment.js');
 
 AWS.config.update({
     region: "us-east-1",
@@ -82,6 +88,9 @@ app.get('/Supplier/GetDetails',  supplier.getDetails);
 
 app.get('/Supplier/GetFoodItems',  supplier.getFoodItems);
 
+app.post('/Supplier/GetAllSuppliers',  supplier.getAllSuppliers);
+
+
 
 app.post('/Login/verifyLogin',  login.verifyLogin);
 
@@ -95,6 +104,22 @@ app.post('/Food/DeleteFood',  food.deleteFood);
 
 app.post('/File/WriteFile',  file.writeFile);
 
+app.get('/File/ReadFile/:filename',  file.readFile);
+
+app.post('/Food/AddToCart',  food.addToCart);
+
+app.post('/Food/DeleteFromCart',  food.deleteFromCart);
+
+
+app.get('/Consumer/GetCartItems',  consumer.getCartItems);
+
+app.get('/User/GetAllInfo',  consumer.getAllInfo);
+
+app.get('/Payment/PayBill',  payment.payBill);
+
+app.get('/Payment/GetToken',  payment.getToken);
+
+
 
 
 
@@ -107,9 +132,16 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
-
+var options = {
+    key: fs.readFileSync( './localhost.key' ),
+    cert: fs.readFileSync( './localhost.cert' ),
+    requestCert: false,
+    rejectUnauthorized: false
+};
 
 var port = process.env.PORT || 8080;
 
-var server = app.listen(port);
+https.createServer(options, app).listen(port);
+
+//var server = app.listen(port);
 

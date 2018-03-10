@@ -1,5 +1,6 @@
 
 const utils = require('./utils.js');
+const geolib = require('geolib');
 
 const addSupplier = function (req, res) {
     const body = req.body;
@@ -155,7 +156,11 @@ const getFoodItems = function (req, res) {
         res.redirect('/public/#/signin');
         return;
     } else {
-        supplierId = (JSON.parse(req.mmfSession.userInfo)).id;
+        if(!req.query.isConsumer){
+            supplierId = (JSON.parse(req.mmfSession.userInfo)).id;
+        }else{
+            supplierId = req.query.supplierId;
+        }
     }
 
     const getPromise = utils.getItems.call(this, 'MyMotherFood.FoodItem', 'supplierId', supplierId);
@@ -171,4 +176,40 @@ const getFoodItems = function (req, res) {
     });
 };
 
-module.exports = { addSupplier, addSupplierAllInfo, getDetails, getFoodItems };
+const getAllSuppliers = function(req, res){
+    const queryStmt = 'Select * From MyMotherFood.Address adr INNER JOIN MyMotherFood.SupplierInfo sup on sup.address_key = adr.adr_key';
+    const executeQueryPromise = utils.executeQuery(queryStmt);
+    executeQueryPromise.then((results, fields) => {
+        getNearbySupplier(results, req, res);
+    }).catch(err => {
+        res.json({
+            code: '02',
+            message: 'Get Food Items failed',
+            error: err.stack
+        });
+    });
+}
+
+const getNearbySupplier = function(results, req, res){
+    const body = req.body;
+    
+    const coords = {
+        latitude: body.latitude,
+        longitude: body.longitude
+    };
+
+    let supplierCoords;
+    for(let i = 0; i < results.length; i++){
+        let result = results[i];
+        supplierCoords = {
+            latitude: result.latitude,
+            longitude: result.longitude
+        }
+        
+        result['distance'] = geolib.getDistance(coords, supplierCoords);
+    }
+
+    res.json(results);
+}
+
+module.exports = { addSupplier, addSupplierAllInfo, getDetails, getFoodItems, getAllSuppliers };

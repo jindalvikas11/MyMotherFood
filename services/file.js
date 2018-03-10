@@ -1,54 +1,38 @@
 var fs = require('fs');
-var AWS = require('aws-sdk');
+
 var utils = require('./utils.js');
 
-AWS.config.update({
-    region: 'us-east-1',
-    accessKeyId: 'AKIAIOW6Y5VRCRJ5NPPQ',
-    secretAccessKey: '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'
-});
+
+
 
 const writeFile = function (req, res) {
-    var s3 = new AWS.S3();
 
-    var params = {
-        Bucket: "mymotherfood",
-        Key: req.body.name
-    };
-
-    if (req.body.name) {
-
-        s3.deleteObject(params, (err, data) => {
-            if (err) console.log(err, err.stack); // an error occurred
-            else {
-                req.body.name = utils.getUniqueKey('701');
-                createFile(req, res);
-            }
-        });
-    } else {
-        req.body.name = utils.getUniqueKey('701');
-        createFile(req, res);
+    var dir = 'temp';
+    
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
     }
-}
-
-const createFile = function (req, res) {
-    var s3 = new AWS.S3();
     var buf = new Buffer(req.body.data.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-    setTimeout(() =>
-        s3.putObject({
-            Bucket: 'mymotherfood',
-            CacheControl: 'no-cache',
-            Key: (req.body.name),
-            Body: buf,
-            ContentEncoding: 'base64',
-            ContentType: 'image/jpeg',
-            ACL: 'public-read'
-        }, function (resp) {
-            res.json({
-                code: '00',
-                name: req.body.name
-            })
-        }), 2000);
+    
+    req.body.name = utils.getUniqueKey('701');
+    fs.writeFile(dir + '/' + req.body.name, buf, (err) => {
+        if (err) throw err;
+        res.json({
+            code: '00',
+            name: req.body.name
+        });
+    });
 }
 
-module.exports = { writeFile };
+const readFile = function (req, res) {
+    var filename = req.params.filename;
+    fs.readFile('temp/'+filename, (err, data) => {
+        if (err) throw err;
+        else {
+            res.send(data);
+        }
+    });
+
+}
+
+module.exports = { writeFile, readFile };

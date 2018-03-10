@@ -35,6 +35,16 @@ export class RestService {
 
   writeFileContext = '/File/WriteFile';
 
+  getSupplierListContext = '/Supplier/GetAllSuppliers';
+
+  addToCartContext = '/Food/AddToCart';
+
+  getCartItemsContext = '/Consumer/GetCartItems';
+
+  getUserInfoContext = '/User/GetAllInfo';
+
+  deleteFromCartContext = '/Food/DeleteFromCart'
+
   constructor(
     private http: HttpClient,
     //private credentials: CredentialsService
@@ -87,8 +97,8 @@ export class RestService {
     return this.http.post<any>(finalUrl, food);
   }
 
-  getSupplierFood():Observable<any>{
-    let finalUrl = this.baseUrl + this.getFoodContext;
+  getSupplierFood(querParams : string):Observable<any>{
+    let finalUrl = this.baseUrl + this.getFoodContext + (querParams ? querParams : '');
     return this.http.get<any>(finalUrl);
   }
 
@@ -105,6 +115,31 @@ export class RestService {
   writeFile(data: any): Observable<any>{
     let finalUrl = this.baseUrl + this.writeFileContext;
     return this.http.post<any>(finalUrl, data);
+  }
+
+  getSupplierList(data: any): Observable<any>{
+    let finalUrl = this.baseUrl + this.getSupplierListContext;
+    return this.http.post<any>(finalUrl, data);
+  }
+
+  addToCart(data: any): Observable<any>{
+    let finalUrl = this.baseUrl + this.addToCartContext;
+    return this.http.post<any>(finalUrl, data);
+  }
+
+  deleteFromCart(data: any): Observable<any>{
+    let finalUrl = this.baseUrl + this.deleteFromCartContext;
+    return this.http.post<any>(finalUrl, data);
+  }
+
+  getCartItems():Observable<any>{
+    let finalUrl = this.baseUrl + this.getCartItemsContext;
+    return this.http.get<any>(finalUrl);
+  }
+
+  getUserInfo():Observable<any>{
+    let finalUrl = this.baseUrl + this.getUserInfoContext;
+    return this.http.get<any>(finalUrl);
   }
 
 }

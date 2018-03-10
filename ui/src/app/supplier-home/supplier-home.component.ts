@@ -45,7 +45,7 @@ export class SupplierHomeComponent implements OnInit {
   }
 
   getFoodItems() {
-    this.rest.getSupplierFood().subscribe((data) => {
+    this.rest.getSupplierFood('').subscribe((data) => {
       this.foodList = data;
     }, err => {
       alert(err.message);

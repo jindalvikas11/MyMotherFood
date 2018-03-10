@@ -101,5 +101,72 @@ const deleteFood = function (req, res) {
     });
 };
 
+const addToCart = function (req, res) {
+    const body = req.body;
+    let consumerId;
+    if (!req.mmfSession.userInfo) {
+        res.redirect('/public/#/signin');
+        return;
+    } else {
+        consumerId = (JSON.parse(req.mmfSession.userInfo)).id;
+    }
 
-module.exports = { addFood, editFood, deleteFood };
+    const id = utils.getUniqueKey('CRT');
+
+    const item = {
+        id: body.id ? body.id : id,
+        consumerId: consumerId,
+        quantity: body.quantity,
+        supplierId: body.supplierId,
+        foodId: body.foodId
+    };
+
+    let cartPromise;
+
+    if (body.id) {
+        cartPromise = utils.updateItem.call(this, "MyMotherFood.CartInfo", ['quantity'], [body.quantity], 'id', body.id);
+    } else {
+        cartPromise = utils.saveItem.call(this, "MyMotherFood.CartInfo", item);
+    }
+
+    cartPromise.then((results, fields) => {
+        res.json({
+            code: '00',
+            message: 'success',
+            results: results,
+            fields: fields,
+            id: id
+        });
+    }).catch((err) => {
+        res.json({
+            code: '01',
+            message: 'fail',
+            error: err.stack
+        });
+    });
+
+};
+
+const deleteFromCart = function (req, res) {
+    const body = req.body;
+
+    const deletePromise = utils.deleteItem.call(this, "MyMotherFood.CartInfo", 'id', body.id);
+
+    deletePromise.then((results, fields) => {
+        res.json({
+            code: '00',
+            message: 'success',
+            results: results,
+            fields: fields
+        });
+    }).catch((err) => {
+        res.json({
+            code: '01',
+            message: 'fail',
+            error: err.stack
+        });
+    });
+}
+
+
+module.exports = { addFood, editFood, deleteFood, addToCart, deleteFromCart };

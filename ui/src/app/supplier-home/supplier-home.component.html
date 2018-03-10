@@ -72,7 +72,7 @@
     <hr/>
     <div class="thumbnail">
       <div class="food-item-container">
-        <img src="{{food.img ? ('https://s3.amazonaws.com/mymotherfood/' + food.img) : '../assets/logow.png'}}" alt="Image Not Found" [class.opaque]="!food.img" width="512" height="512" class="img-thumbnail">
+        <img src="{{food.img ? ('/File/ReadFile/' + food.img) : '../assets/logow.png'}}" alt="Image Not Found" [class.opaque]="!food.img" width="512" height="512" class="img-thumbnail">
         <button class="btn btn-primary float-left" (click)="editFood(food, content)">Edit</button>
         <button class="btn btn-danger float-right" (click)="deleteFood(food)">Delete</button>
       </div>

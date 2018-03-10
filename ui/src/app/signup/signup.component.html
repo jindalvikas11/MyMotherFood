@@ -1,142 +1,126 @@
-
-
-<form (ngSubmit)="onSubmit()" class="signup" #signupForm="ngForm" style="margin-top:120px">
-    <div class="row justify-content-lg-center">
-
-    <div class="col-lg-4" (window:resize)="onResize($event)">
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-primary" [class.active]="'C' === user.type">
-          <input type="radio" name="consumer" [(ngModel)]="user.type" value="C">&nbsp;&nbsp;I want to order food</label>
-        <label class="btn btn-outline-primary" [class.active]="'S' === user.type">
-          <input type="radio" name="supplier" [(ngModel)]="user.type" value="S">&nbsp;&nbsp;I want to supply food</label>
+<form (ngSubmit)="onSubmit()" class="signup row" #signupForm="ngForm">
+  <div class="form-group col-md-4 offset-md-4">
+    <form [formGroup]="signupGroupForm" class="signup-action">
+      <div class="btn-group btn-group-toggle"  style="width:100%" ngbRadioGroup name="radioBasic" formControlName="model">
+        <label ngbButtonLabel class="btn-primary" style="width:50%">
+          <input ngbButton type="radio" value="C">I want to order food
+        </label>
+        <label ngbButtonLabel class="btn-primary" style="width:50%">
+          <input ngbButton type="radio" value="S">I want to supply food
+        </label>
       </div>
-    </div>
-    </div>
+    </form>
+  </div>
 
-    <div class="row justify-content-md-center">
-    <div class="form-group col-md-4">
-      <input type="text" class="form-control" id="user-firstName" [(ngModel)]="user.firstName" required="true" name="firstName"
-        #name="ngModel">
-      <span class="floating-label">First Name</span>                
-    </div>
-    </div>
 
-    <div class="row justify-content-md-center">
-    <div class="form-group col-md-4">
-      <!--<label for="user-lastName">Last Name
+
+  <div class="form-group col-md-4 offset-md-4">
+    <input type="text" class="form-control" id="user-firstName" [(ngModel)]="user.firstName" required="true" name="firstName"
+      #name="ngModel">
+    <span class="floating-label">First Name</span>
+  </div>
+
+
+
+  <div class="form-group col-md-4  offset-md-4">
+    <!--<label for="user-lastName">Last Name
         <sup>*</sup>
       </label>-->
-      <input  type="text" class="form-control" id="user-lastName" [(ngModel)]="user.lastName" required="true"
-        name="lastName" #name="ngModel">
-      <span class="floating-label">Last Name</span>                
-    </div>
-    </div>
+    <input type="text" class="form-control" id="user-lastName" [(ngModel)]="user.lastName" required="true" name="lastName" #name="ngModel">
+    <span class="floating-label">Last Name</span>
+  </div>
 
-    <div class="row justify-content-md-center">
 
-    <div class="form-group col-md-4">
-      <!--<label for="contact-email">Email address
+
+
+  <div class="form-group col-md-4  offset-md-4">
+    <!--<label for="contact-email">Email address
         <sup>*</sup>
       </label>-->
-      <input  type="email" class="form-control" id="user-email" required="true" [(ngModel)]="user.email"
-        name="email" #email="ngModel">
-      <span class="floating-label">Email address</span>                
-    </div>
+    <input type="email" class="form-control" id="user-email" required="true" [(ngModel)]="user.email" name="email" #email="ngModel">
+    <span class="floating-label">Email address</span>
   </div>
 
-  <div class="row justify-content-md-center">
 
-    <div class="form-group col-md-4">
-      <!--<label for="user-password">Password
+
+
+  <div class="form-group col-md-4  offset-md-4">
+    <!--<label for="user-password">Password
         <sup>*</sup>
       </label>-->
-      <input type="password" class="form-control" id="user-password" [(ngModel)]="user.password" required="true"
-        name="password" #name="ngModel">
-      <span class="floating-label">Password</span>                
-    </div>
+    <input type="password" class="form-control" id="user-password" [(ngModel)]="user.password" required="true" name="password"
+      #name="ngModel">
+    <span class="floating-label">Password</span>
   </div>
 
-  <div class="row justify-content-md-center">
 
-    <div class="form-group col-md-4">
-      <!--<label for="contact-phone">Phone Number
+
+
+  <div class="form-group col-md-4  offset-md-4">
+    <!--<label for="contact-phone">Phone Number
         <sup>*</sup>
       </label>-->
-      <input type="number" class="form-control" id="user-phone" required="true" [(ngModel)]="user.phone"
-        name="phone" #phone="ngModel">
-      <span class="floating-label">Phone Number</span>                
-    </div>
+    <input type="number" class="form-control" id="user-phone" required="true" [(ngModel)]="user.phone" name="phone" #phone="ngModel">
+    <span class="floating-label">Phone Number</span>
   </div>
 
-  <div class="row justify-content-md-center">
 
-    <div class="form-group col-md-4" *ngIf="user.type === 'S'">
-      <!--<label for="user-adrline1">Address Line 1
+
+
+  <div class="form-group col-md-4  offset-md-4" *ngIf="user.type === 'S'">
+    <!--<label for="user-adrline1">Address Line 1
         <sup>*</sup>
       </label>-->
-      <input  type="text" class="form-control" id="user-adrline1" [(ngModel)]="user.adrline1" required="true"
-        name="adrline1" #name="ngModel">
-      <span class="floating-label">Address Line 1</span>                
-    </div>
+    <input type="text" class="form-control" id="user-adrline1" [(ngModel)]="user.adrline1" required="true" name="adrline1" #name="ngModel">
+    <span class="floating-label">Address Line 1</span>
   </div>
 
-    
-  <div class="row justify-content-md-center">
-    <div class="form-group col-md-4" *ngIf="user.type === 'S'">
-      <!--<label for="user-adrline2">Address Line 2
+
+
+
+  <div class="form-group col-md-4  offset-md-4" *ngIf="user.type === 'S'">
+    <!--<label for="user-adrline2">Address Line 2
       </label>-->
-      <input type="text" class="form-control" id="user-adrline2" [(ngModel)]="user.adrline2" name="adrline2"
-        #name="ngModel">
-      <span class="floating-label">Address Line 2</span>                
-    </div>
+    <input type="text" class="form-control" id="user-adrline2" [(ngModel)]="user.adrline2" name="adrline2" #name="ngModel">
+    <span class="floating-label">Address Line 2</span>
   </div>
 
-  <div class="row justify-content-md-center">
 
-    <div class="form-group col-md-4" *ngIf="user.type === 'S'">
-      <!--<label for="user-city">City
+
+
+  <div class="form-group col-md-4  offset-md-4" *ngIf="user.type === 'S'">
+    <!--<label for="user-city">City
         <sup>*</sup>
       </label>-->
-      <input type="text" class="form-control" id="user-city" [(ngModel)]="user.city" required="true" name="city"
-        #name="ngModel">
-      <span class="floating-label">City</span>                
-    </div>
+    <input type="text" class="form-control" id="user-city" [(ngModel)]="user.city" required="true" name="city" #name="ngModel">
+    <span class="floating-label">City</span>
   </div>
 
-    
-  <div class="row justify-content-md-center">
-    <div class="form-group col-md-4" *ngIf="user.type === 'S'">
-      <!--<label for="user-state">State
+
+
+
+  <div class="form-group col-md-4  offset-md-4" *ngIf="user.type === 'S'">
+    <!--<label for="user-state">State
         <sup>*</sup>
       </label>-->
-      <input type="text" class="form-control" id="user-state" [(ngModel)]="user.state" required="true" name="state"
-        #name="ngModel">
-      <span class="floating-label">State</span>                
-    </div>
+    <input type="text" class="form-control" id="user-state" [(ngModel)]="user.state" required="true" name="state" #name="ngModel">
+    <span class="floating-label">State</span>
   </div>
 
-  <div class="row justify-content-md-center">
 
-    <div class="form-group col-md-4" *ngIf="user.type === 'S'">
-      <!--<label for="user-country">Country
+
+
+  <div class="form-group col-md-4  offset-md-4" *ngIf="user.type === 'S'">
+    <!--<label for="user-country">Country
         <sup>*</sup>
       </label>-->
-      <input type="text" class="form-control" id="user-country" [(ngModel)]="user.country" required="true"
-        name="country" #name="ngModel">
-      <span class="floating-label">Country</span>                
-    </div>
+    <input type="text" class="form-control" id="user-country" [(ngModel)]="user.country" required="true" name="country" #name="ngModel">
+    <span class="floating-label">Country</span>
   </div>
 
-  <div *ngIf="message" class="row justify-content-md-center">
-    <div class="col-md-4">
-      <p>{{ message }}</p>
-    </div>
+
+  <div class="col-md-4  offset-md-4">
+    <button type="submit" class="btn btn-primary"  style="width:100%" [disabled]="!signupForm.form.valid">Submit</button>
   </div>
 
-  <div class="row justify-content-md-center">
-
-    <div class="col-md-4">
-      <button type="submit" class="btn btn-primary" [disabled]="!signupForm.form.valid">Submit</button>
-    </div>
-  </div>
 </form>

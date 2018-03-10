@@ -1,0 +1,83 @@
+{
+  "service": {
+    "service": "serverless-s3-local-example",
+    "serviceObject": {
+      "name": "serverless-s3-local-example"
+    },
+    "provider": {
+      "stage": "dev",
+      "region": "us-east-1",
+      "variableSyntax": "\\${([ ~:a-zA-Z0-9._'\",\\-\\/\\(\\)]+?)}",
+      "name": "aws",
+      "runtime": "nodejs4.3",
+      "versionFunctions": true,
+      "remoteFunctionData": null,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket"
+          },
+          "NewResource": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketName": "local-bucket"
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          }
+        }
+      },
+      "coreCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket"
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          }
+        }
+      }
+    },
+    "custom": {
+      "s3": {
+        "host": "0.0.0.0",
+        "port": 8000,
+        "directory": "/tmp",
+        "cors": false
+      }
+    },
+    "plugins": [
+      "serverless-s3-local",
+      "serverless-offline"
+    ],
+    "functions": {},
+    "resources": {
+      "Resources": {
+        "NewResource": {
+          "Type": "AWS::S3::Bucket",
+          "Properties": {
+            "BucketName": "local-bucket"
+          }
+        }
+      },
+      "Outputs": {}
+    }
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/serverless-s3-local-example/dev/1520450344851-2018-03-07T19:19:04.851Z",
+    "artifact": ""
+  }
+}

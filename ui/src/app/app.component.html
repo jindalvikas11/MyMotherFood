@@ -1,18 +1,28 @@
 <div class="overlay"></div>
 
-<div class="float-right row" style="margin-right:15px">
-  <div class="home-toggle" [class.col-md-9]="info.loggedIn === true" [class.col-md-12]="!info.loggedIn">
-    <a class="btn-outline-primary btn" routerLink="home" routerLinkActive="active" *ngIf="!info.loggedIn">Home</a>
-    <a class="btn-outline-primary btn" routerLink="signup" routerLinkActive="active" *ngIf="!info.loggedIn">Sign Up</a>
-    <a class="btn-outline-primary btn" routerLink="signin" routerLinkActive="active" *ngIf="!info.loggedIn">Sign In</a>
-    <a class="btn-outline-primary btn" routerLink="signin" routerLinkActive="active" (click)="signout()" *ngIf="info.loggedIn">Sign Out</a>
-  </div>
-  <div class="menuicon col-md-3" (click)="openNav()" *ngIf="info.loggedIn">
+<div class="menuicon float-right" (click)="openNav()" *ngIf="isLoggedIn()">
     <div></div>
     <div></div>
     <div></div>
-  </div>
 </div>
+
+
+<form [formGroup]="radioGroupForm" class="float-right main-action">
+  <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="model">
+    <label ngbButtonLabel class="btn-primary" *ngIf="!isLoggedIn()">
+      <input ngbButton type="radio" value="home">Home
+    </label>
+    <label ngbButtonLabel class="btn-primary" *ngIf="!isLoggedIn()">
+      <input ngbButton type="radio" value="signup">Sign Up
+    </label>
+    <label ngbButtonLabel class="btn-primary" *ngIf="!isLoggedIn()">
+      <input ngbButton type="radio" value="signin">Sign In
+    </label>
+    <label ngbButtonLabel class="btn-primary" *ngIf="isLoggedIn()">
+      <input ngbButton type="radio" value="signout">Sign Out
+    </label>
+  </div>
+</form>
 
 
 <div id="mySidenav" class="sidenav">
@@ -22,8 +32,18 @@
   <a class="nav-link" routerLink="contact" routerLinkActive="active" (click)="closeNav()">Credits</a>
 </div>
 
-<img style="margin:auto" src="../assets/logo.png" class="float-left">
-<div class="logoText align-middle">My Mother's Food</div>
+<div class="row">
+  <div class="col-md-1">
+    <img src="../assets/logo.png" width="80px" height="100px">
+  </div>
+  <div class="col-md-5">
+    <div class="logoText">My Mother's Food</div>
+    <h5>{{getWelcomeMessage()}}</h5>
+  </div>
+  <div class="col-md-1 offset-md-5">
+    <div class="cart" *ngIf="isLoggedIn()" (click)="showCart()">{{data.getTotalItemInCart()}}</div>      
+  </div>
+</div>
 
 
 <div id="main">

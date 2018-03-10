@@ -1,9 +1,6 @@
-
-
-@import "~bootstrap/dist/css/bootstrap.min.css";
-
 body {
     background-color: rgba(0,0,0,0.5);
+    color: white;
 }
 
 body:after{
@@ -29,9 +26,41 @@ body:after{
 }
 
 .logoText{
-    color: #0275d8;
-    font-weight: 900;
+    color: #007bff;
+    font-weight: 400;
     font-family: cursive;
-    font-size: 50px;
-    text-shadow: 2px 2px #26e05f;
+    font-size: 35px;
+    text-shadow: 2px 2px #007bff;
+}
+
+.loader {
+    border: 6px solid #bfccbf;
+    border-top: 6px solid #0b89de;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 28%;
+}
+
+.loaderOverlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+    background-color: rgba(1,1,1,0.7);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.popover{
+    width: 1000px;
+    /*max-width: 100%;*/
 }

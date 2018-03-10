@@ -1,0 +1,21 @@
+<div class="row food-items">
+  <div class="col-sm-3 col-md-3" *ngFor="let food of foodList">
+    <hr/>
+    <div class="thumbnail">
+      <div class="food-item-container">
+        <img src="{{food.img ? ('/File/ReadFile/' + food.img) : '../assets/logow.png'}}" alt="Image Not Found" [class.opaque]="!food.img" width="512" height="512" class="img-thumbnail">
+        <button class="btn btn-primary float-right" (click)="addToCart(food, $event)">Add To Cart</button>
+      </div>
+      <div class="caption">
+
+        <div class="float-left font-weight-bold">{{food.name | capitalize}}</div>
+        <div class="float-right font-weight-bold">{{food.price | currency}}</div>
+        <br/>
+        <div style="font-family:cursive; color:#c1bdbd">{{food.description | capitalize}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

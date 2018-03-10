@@ -66,6 +66,7 @@ const saveItem = function (table, item) {
     });
 };
 
+
 const updateItem = function (table, cols, values, colName, colVal) {
     return new Promise((resolve, reject) => {
         console.log(cols);
@@ -86,6 +87,36 @@ const updateItem = function (table, cols, values, colName, colVal) {
         });
     });
 };
+
+const convertObjToString = function(obj){
+    const keys = Object.keys(obj);
+    let key, val;
+    let result = '';
+    for(let i = 0; i < keys.length; i ++){
+        key = keys[i];
+        val = obj[key];
+        result = result + key + '="' + val + '"';
+        if(i !== keys.length - 1){
+            result = result + ', ';
+        }
+    }
+
+    return result;
+}
+
+const insertOrUpdateItem = function(table, item){
+    return new Promise((resolve, reject) => {
+        const querStmt = 'INSERT INTO ' + table + 'SET ' + convertObjToString(item) + 'ON DUPLICATE KEY UPDATE ' + col + '="' + item[col] + '"';  
+        connection.query(querStmt, (error, results, fields) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results, fields);
+            }
+            //connection.destroy();
+        });
+    });
+}
 
 const deleteItem = function(table, colName, colVal){
     return new Promise((resolve, reject) => {
@@ -115,6 +146,32 @@ const getItems = function (table, columnName, columnVal) {
     });
 };
 
+const executeQuery = function(query){
+    return new Promise((resolve, reject) => {
+        connection.query(query, (error, results, fields) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results, fields);
+            }
+        });
+    });
+}
+
+const executeProcedure = function(name, id){
+    return new Promise((resolve, reject) => {
+        const query = `CALL MyMotherFood.${name}(?)`; 
+        console.log(query);
+        connection.query(query, id, (error, results, fields) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results, fields);
+            }
+        });
+    });
+}
+
 
 
 const getUniqueKey = function (prefix) {
@@ -130,4 +187,5 @@ function randomString() {
 }
 
 
-module.exports = { saveItem, getItems, getUniqueKey, randomString, updateItem, deleteItem, getCoordinates };
+module.exports = { saveItem, getItems, getUniqueKey, randomString, updateItem, 
+                    deleteItem, getCoordinates, executeQuery, insertOrUpdateItem, executeProcedure };
